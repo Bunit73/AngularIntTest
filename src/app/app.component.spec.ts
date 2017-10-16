@@ -1,14 +1,20 @@
 /* tslint:disable:no-unused-variable */
-
+import { By } from '@angular/platform-browser';
+import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, async } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule.withRoutes([]) ],
       declarations: [
         AppComponent
       ],
+      // Ignores unknown components
+      schemas: [ NO_ERRORS_SCHEMA ]
     });
     TestBed.compileComponents();
   });
@@ -31,4 +37,13 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('app works!');
   }));
+
+  it('should have a router outlet', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    let de = fixture.debugElement.query(By.directive(RouterOutlet));
+
+    expect(de).not.toBeNull();
+
+  })
 });
